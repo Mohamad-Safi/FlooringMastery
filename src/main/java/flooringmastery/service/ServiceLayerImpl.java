@@ -70,22 +70,40 @@ public class ServiceLayerImpl implements ServiceLayer{
 
     @Override
     public Order getOrder(LocalDate date, int orderNumer) throws PersistenceException, NoSuchOrderException {
-        return null;
+
+        Order givenOrder = orderDao.getOrder(date, orderNumer);
+        if (givenOrder == null){
+            throw new NoSuchOrderException("This order doesnt exist, " +orderNumer+
+                    "please try again with the correct inputs");
+        }
+        return givenOrder;
     }
 
     @Override
     public Order createOrder(Order order) throws PersistenceException {
-        return null;
+        int nextOrderNumber = getNextOrderNumber();
+        order.setOrderNumber(nextOrderNumber);
+        calculateOrderCosts(order);
+        orderDao.addOrder(order);
+        return order;
+
+
     }
 
     @Override
     public Order editOrder(Order order) throws PersistenceException {
-        return null;
+        calculateOrderCosts(order);
+        orderDao.editOrder(order);
+
+        return order;
     }
 
     @Override
     public Order removeOrder(LocalDate date, int orderNumber) throws PersistenceException, NoSuchOrderException {
-        return null;
+        getOrder(date, orderNumber);
+
+        return orderDao.removeOrder(date, orderNumber);
+
     }
 
     @Override
