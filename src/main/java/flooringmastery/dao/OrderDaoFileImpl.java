@@ -135,10 +135,6 @@ public class OrderDaoFileImpl implements OrderDao{
 
     }
 
-    @Override
-    public Order getOrder(LocalDate date, int orderNumber) throws PersistenceException {
-        return null;
-    }
 
     @Override
     public Order addOrder(Order order) throws PersistenceException {
@@ -160,24 +156,62 @@ public class OrderDaoFileImpl implements OrderDao{
 
     return order;
 
-
     }
+
+    @Override
+    public Order removeOrder(LocalDate date, int orderNumber) throws PersistenceException {
+        loadAllOrders();//load files
+        Map<Integer, Order> ordersForDate = orders.get(date);//get the values of innermap
+        if (ordersForDate==null){//if empty return null
+            return null;
+        }//if not remove the order
+        Order removedOrder = ordersForDate.remove(orderNumber);
+        //rewrite the file
+        writeOrderFile(date);
+
+
+        return removedOrder;
+    }
+
+    @Override
+    public Order getOrder(LocalDate date, int orderNumber) throws PersistenceException {
+
+
+        loadAllOrders();
+        Map<Integer, Order> ordersForDate = orders.get(date);
+        if (ordersForDate == null){
+            return null;
+        }else{
+            return ordersForDate.get(orderNumber);
+        }
+    }
+
 
 
 
     @Override
     public Order editOrder(Order order) throws PersistenceException {
-        return null;
+        loadAllOrders();
+        LocalDate date = order.getOrderDate();
+        Map<Integer, Order> ordersForDate = orders.get(date);
+        ordersForDate.put(order.getOrderNumber(), order);
+        writeOrderFile(date);
+        return order;
     }
 
-    @Override
-    public Order removeOrder(LocalDate date, int orderNumber) throws PersistenceException {
-        return null;
-    }
 
     @Override
     public List<Order> getAllOrders() throws PersistenceException {
-        return List.of();
+
+        loadAllOrders();;
+        List<Order> allOrders = new ArrayList<>();
+        for (Map<Integer, Order> innerMap : orders.values()){
+            for (Order order : innerMap.values()){
+                allOrders.add(order);
+            }
+
+        }
+        return allOrders;
     }
 
 
