@@ -26,6 +26,9 @@ public class Order {
     //constructor:
 
 
+    public Order() {
+    }
+
     public Order(int orderNumber, String customerName, String state,
                  LocalDate orderDate, BigDecimal taxRate,
                  String productType,
