@@ -17,6 +17,53 @@ public class View {
     }
 
 
+    public Order getEditOrderInfo(Order order, List<Tax> taxes, List<Product> products){
+
+        String userNameInput = io.readString("Enter customer name: (" +
+                 order.getCustomerName()+ " ):");
+
+        if (!userNameInput.trim().isEmpty()){
+            order.setCustomerName(userNameInput);
+        }
+
+        String stateInput = io.readString("Enter state: ("+ order.getState()+ " ):");
+        if (!stateInput.trim().isEmpty()){
+
+
+            Tax newStateTax = getTaxForState(stateInput, taxes);
+            if (newStateTax != null){
+                order.setState(newStateTax.getState());
+                order.setTaxRate(newStateTax.getTaxRate());
+            }else {
+                io.print("State not found - keeping existing state");
+            }
+        }
+        String productInput = io.readString("Enter product type (" + order.getProductType() + "): ");
+        if (!productInput.trim().isEmpty()) {
+            Product newProduct = getProduct(productInput, products);
+            if (newProduct != null) {
+                order.setProductType(newProduct.getProductType());
+                order.setCostPerSquareFoot(newProduct.getCostPerSquareFoot());
+                order.setLabourCostPerSquareFoot(newProduct.getLabourCostPerSquareFoot());
+            } else {
+                io.print("Product not found - keeping existing product");
+            }
+        }
+
+        String areaInput = io.readString("Enter area (" + order.getArea() + "): ");
+        if (!areaInput.trim().isEmpty()) {
+            BigDecimal newArea = new BigDecimal(areaInput);   // (could wrap in try/catch for safety)
+            if (newArea.compareTo(new BigDecimal("100")) >= 0) {
+                order.setArea(newArea);
+            } else {
+                io.print("Area must be at least 100 - keeping existing area");
+            }
+        }
+
+        return order;
+    }
+
+
     public boolean getConfirmation(String message){
         //
         while (true){
