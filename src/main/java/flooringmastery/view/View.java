@@ -3,15 +3,18 @@ package flooringmastery.view;
 import flooringmastery.model.Order;
 import flooringmastery.model.Product;
 import flooringmastery.model.Tax;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@Component
 public class View {
 
     private UserIO io;
-
+@Autowired
     public View(UserIO io) {
         this.io = io;
     }

@@ -4,12 +4,15 @@ import flooringmastery.dao.*;
 import flooringmastery.model.Order;
 import flooringmastery.model.Product;
 import flooringmastery.model.Tax;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
+@Component
 public class ServiceLayerImpl implements ServiceLayer{
 
     private OrderDao orderDao;
@@ -17,6 +20,7 @@ public class ServiceLayerImpl implements ServiceLayer{
     private TaxDao taxDao;
     private ExportDao exportDao;
 
+    @Autowired
     public ServiceLayerImpl(OrderDao orderDao, ProductDao productDao, TaxDao taxDao, ExportDao exportDao) {
         this.orderDao = orderDao;
         this.productDao = productDao;

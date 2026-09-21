@@ -7,15 +7,19 @@ import flooringmastery.model.Tax;
 import flooringmastery.service.NoSuchOrderException;
 import flooringmastery.service.ServiceLayer;
 import flooringmastery.view.View;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Component
 public class Controller {
 
     private View view;
     private ServiceLayer service;
 
+    @Autowired
     public Controller(View view, ServiceLayer service) {
         this.view = view;
         this.service = service;

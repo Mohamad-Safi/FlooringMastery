@@ -1,6 +1,7 @@
 package flooringmastery.dao;
 
 import flooringmastery.model.Order;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileWriter;
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
+@Component
 public class ExportDaoImpl implements ExportDao{
 
 

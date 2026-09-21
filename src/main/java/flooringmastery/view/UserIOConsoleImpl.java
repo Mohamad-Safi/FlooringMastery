@@ -1,4 +1,5 @@
 package flooringmastery.view;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.DateTimeException;
@@ -6,6 +7,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+
+@Component
 public class UserIOConsoleImpl implements  UserIO{
 
     private final Scanner scanner = new Scanner(System.in);

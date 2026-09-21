@@ -6,6 +6,7 @@ import flooringmastery.service.ServiceLayerImpl;
 import flooringmastery.view.UserIO;
 import flooringmastery.view.UserIOConsoleImpl;
 import flooringmastery.view.View;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class App {
 
@@ -13,21 +14,11 @@ public class App {
 
         //bottm layer of the service
 
-        UserIO io = new UserIOConsoleImpl();
-        OrderDao orderdao = new OrderDaoFileImpl();
-        ProductDao productDao = new ProductDaoFileImpl();
-        TaxDao taxDao = new TaxDaoFileImpl();
-        ExportDao exportDao = new ExportDaoImpl();
+        AnnotationConfigApplicationContext appContext = new AnnotationConfigApplicationContext();
+        appContext.scan("flooringmastery");
+        appContext.refresh();
 
-
-        // Middle layers
-        View view = new View(io);
-        ServiceLayerImpl service = new ServiceLayerImpl(orderdao, productDao, taxDao, exportDao);
-
-        //top layer the controller
-
-        Controller controller = new Controller(view, service);
-
+        Controller controller = appContext.getBean("controller", Controller.class);
         controller.run();
 
 

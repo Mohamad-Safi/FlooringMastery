@@ -1,4 +1,5 @@
 package flooringmastery.dao;
+import org.springframework.stereotype.Component;
 
 import flooringmastery.model.Order;
 
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+@Component
 public class OrderDaoFileImpl implements OrderDao{
 
 
