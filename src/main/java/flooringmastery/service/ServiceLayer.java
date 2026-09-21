@@ -31,4 +31,6 @@ public interface ServiceLayer {
 
     void calculateOrderCosts(Order order) throws PersistenceException;
 
+    void exportData() throws PersistenceException;
+
 }

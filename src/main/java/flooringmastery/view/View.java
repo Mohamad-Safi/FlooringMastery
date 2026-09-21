@@ -20,13 +20,13 @@ public class View {
     public Order getEditOrderInfo(Order order, List<Tax> taxes, List<Product> products){
 
         String userNameInput = io.readString("Enter customer name: (" +
-                 order.getCustomerName()+ " ):");
+                 order.getCustomerName()+ " )");
 
         if (!userNameInput.trim().isEmpty()){
             order.setCustomerName(userNameInput);
         }
 
-        String stateInput = io.readString("Enter state: ("+ order.getState()+ " ):");
+        String stateInput = io.readString("Enter state: ("+ order.getState()+ " )");
         if (!stateInput.trim().isEmpty()){
 
 
@@ -51,14 +51,19 @@ public class View {
         }
 
         String areaInput = io.readString("Enter area (" + order.getArea() + "): ");
-        if (!areaInput.trim().isEmpty()) {
-            BigDecimal newArea = new BigDecimal(areaInput);   // (could wrap in try/catch for safety)
-            if (newArea.compareTo(new BigDecimal("100")) >= 0) {
-                order.setArea(newArea);
-            } else {
-                io.print("Area must be at least 100 - keeping existing area");
+        try {
+            if (!areaInput.trim().isEmpty()) {
+                BigDecimal newArea = new BigDecimal(areaInput);   // (could wrap in try/catch for safety)
+                if (newArea.compareTo(new BigDecimal("100")) >= 0) {
+                    order.setArea(newArea);
+                } else {
+                    io.print("Area must be at least 100 - keeping existing area");
+                }
             }
+        }catch(NumberFormatException e){
+            io.print("invalid number, keeping existing area");
         }
+
 
         return order;
     }
@@ -125,6 +130,11 @@ public class View {
             displayOrder(o);
         }
 
+    }
+
+    public void displayExportSuccess(){
+
+        io.print("Data exported successfully.");
     }
     public Tax getTaxForState(String state, List<Tax> taxes){
         for (Tax t : taxes){

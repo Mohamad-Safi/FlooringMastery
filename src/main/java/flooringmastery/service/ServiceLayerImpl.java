@@ -1,9 +1,6 @@
 package flooringmastery.service;
 
-import flooringmastery.dao.OrderDao;
-import flooringmastery.dao.PersistenceException;
-import flooringmastery.dao.ProductDao;
-import flooringmastery.dao.TaxDao;
+import flooringmastery.dao.*;
 import flooringmastery.model.Order;
 import flooringmastery.model.Product;
 import flooringmastery.model.Tax;
@@ -18,11 +15,13 @@ public class ServiceLayerImpl implements ServiceLayer{
     private OrderDao orderDao;
     private ProductDao productDao;
     private TaxDao taxDao;
+    private ExportDao exportDao;
 
-    public ServiceLayerImpl(OrderDao orderDao, ProductDao productDao, TaxDao taxDao) {
+    public ServiceLayerImpl(OrderDao orderDao, ProductDao productDao, TaxDao taxDao, ExportDao exportDao) {
         this.orderDao = orderDao;
         this.productDao = productDao;
         this.taxDao = taxDao;
+        this.exportDao = exportDao;
     }
 
     @Override
@@ -121,5 +120,9 @@ public class ServiceLayerImpl implements ServiceLayer{
         return orderDao.getNextOrderNumber();
     }
 
-
+    @Override
+    public void exportData() throws PersistenceException {
+        List<Order> allOrders = orderDao.getAllOrders();
+        exportDao.exportAllData(allOrders);
+    }
 }
