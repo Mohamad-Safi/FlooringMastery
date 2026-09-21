@@ -84,7 +84,7 @@ public class View {
     }
 
     public LocalDate getDateInput(){
-        return io.readLocalDate("please enter order date");
+        return io.readLocalDate("please enter order date: (MM-DD-YYYY)");
     }
     public int getOrderNumber (){
         return io.readInt("Please enter order number");

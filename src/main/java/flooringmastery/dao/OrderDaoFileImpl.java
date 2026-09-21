@@ -125,7 +125,6 @@ public class OrderDaoFileImpl implements OrderDao{
         loadAllOrders();//call loadallorders to make thee map popluate with orders.
         //the maps key is the date so extract the key
 
-        System.out.println("Map contents: " + orders);
         Map<Integer, Order> todaysDate = orders.get(date);
 
         if (todaysDate == null){

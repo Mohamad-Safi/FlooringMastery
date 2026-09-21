@@ -60,7 +60,12 @@ public class Controller {
     private void displayOrders() throws PersistenceException, NoSuchOrderException {
         LocalDate date = view.getDateInput();
         List<Order> orders = service.getOrdersForDate(date);
-        view.displayOrderList(orders);
+        if (orders.isEmpty()) {
+            view.displayErrorMessage("No orders found for that date.");
+        } else {
+            view.displayOrderList(orders);
+        }
+
     }
 
     private void addOrder() throws PersistenceException{
