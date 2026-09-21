@@ -1,0 +1,7 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total,OrderDate
+5,mohamad safi,CA,25.00,Tile,200,3.50,4.15,700.00,830.00,382.50,1912.50,12-25-2026
+6,mohamad safi,CA,25.00,Tile,100,3.50,4.15,350.00,415.00,191.25,956.25,12-25-2026
+2,Doctor Who,WA,9.25,Wood,243.00,5.15,4.75,1251.45,1154.25,216.51,2622.21,06-02-2013
+3,Albert Einstein,KY,6.00,Carpet,217.00,2.25,2.10,488.25,455.70,56.64,1000.59,06-02-2013
+1,Ada Lovelace,CA,25.00,Tile,249.00,3.50,4.15,871.50,1033.35,476.21,2381.06,06-01-2013
+4,Test Customer,CA,25.00,Tile,100.00,3.50,4.15,500.00,500.00,50.00,1050.00,06-01-2013
