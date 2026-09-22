@@ -28,19 +28,26 @@ public class OrderDaoFileImpl implements OrderDao{
     public void loadAllOrders() throws PersistenceException{
         File ordersFolder = new File(ORDER_FOLDER);//Creates a new File instance by converting
         // the given pathname string into an abstract pathname.
+
+        if (!ordersFolder.exists()){
+            ordersFolder.mkdir();//if the order folder doesnt exist create it first.
+        }
         File[] files = ordersFolder.listFiles();
+        if (files!=null){
 
-        for (File file : files){
-            String fileName = file.getName();//returns the name of the fiel.
-            //sstart at the orders prefix and end at .txt prefix
-            String dateString = fileName.substring("Orders_".length(), fileName.length()-".txt".length());
-            //then parse the dateString into the localdate
-            LocalDate date = LocalDate.parse(dateString, FILE_NAME_FORMAT);
+            for (File file : files){
+                String fileName = file.getName();//returns the name of the fiel.
+                //sstart at the orders prefix and end at .txt prefix
+                String dateString = fileName.substring("Orders_".length(), fileName.length()-".txt".length());
+                //then parse the dateString into the localdate
+                LocalDate date = LocalDate.parse(dateString, FILE_NAME_FORMAT);
 
-            readOrderFile(file, date);
-
+                readOrderFile(file, date);
+            }
 
         }
+
+
     }
 
     private void writeOrderFile(LocalDate date) throws PersistenceException{
@@ -56,8 +63,10 @@ public class OrderDaoFileImpl implements OrderDao{
 
         Map<Integer, Order> thisDatesOrder = orders.get(date);
         for (Order order : thisDatesOrder.values()){
+
+            String customerName = order.getCustomerName().replace(",", "[comma]");
             String orderLine = order.getOrderNumber()+ DELIMITER
-                    +order.getCustomerName()+DELIMITER+ order.getState()+DELIMITER+
+                    +customerName + DELIMITER+ order.getState()+DELIMITER+
                     order.getTaxRate()+DELIMITER+order.getProductType()+DELIMITER+
                     order.getArea()+DELIMITER+order.getCostPerSquareFoot()+DELIMITER+
                     order.getLabourCostPerSquareFoot() + DELIMITER
@@ -83,12 +92,14 @@ public class OrderDaoFileImpl implements OrderDao{
         scanner.nextLine();
         Map<Integer, Order> ordersForThisDate = new HashMap<>();
 
+
         while(scanner.hasNextLine()){
             //scanner object reads line by line
             String currentLine = scanner.nextLine();
             String[] tokens = currentLine.split(DELIMITER);
+            String restoredName = tokens[1].replace("[comma]", ",");
 
-            Order order = new Order(Integer.parseInt(tokens[0]), tokens[1], tokens[2], date, new BigDecimal(tokens[3]),
+            Order order = new Order(Integer.parseInt(tokens[0]), restoredName+DELIMITER, tokens[2], date, new BigDecimal(tokens[3]),
                     tokens[4], new BigDecimal(tokens[6]), new BigDecimal(tokens[7]), new BigDecimal(tokens[8]), new BigDecimal(tokens[5]),
                     new BigDecimal(tokens[9]), new BigDecimal(tokens[10]), new BigDecimal(tokens[11]));
 
